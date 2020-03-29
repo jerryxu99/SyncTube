@@ -7,7 +7,7 @@
             <button id="toggle" style="width: 50px" onclick="toggleVideo()">play</button>
             <svg id="scroll" height="13" width="530" onclick>
                 <rect y="7" width="530" height="2" style="stroke:rgb(255,0,0);stroke-width:2" onclick="handleClick(event)"/>
-                <circle cx="0" cy="8" r="6" stroke="red" stroke-width="3" fill="white"/>
+                <circle id="scrollCircle" cx="0" cy="8" r="6" stroke="red" stroke-width="3" fill="white"/>
             </svg>
         </div>
         <script>
@@ -43,7 +43,9 @@
             }
             
             function handleClick(e) {
-              console.log(e.clientX - 50 - 11);//x - button width - padding
+              document.querySelector('#scrollCircle').setAttributeNS(null, "cx", e.clientX - 50 - 11);
+              //needs to be changed if width of button is changed
+              console.log(e.clientX - 50 - 11);//x - button width - padding 
               console.log((e.clientX - 50 - 11) / 530 * player.getDuration());
               player.seekTo((e.clientX - 50 - 11) / 530 * player.getDuration(), false);
             }
