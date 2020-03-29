@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+        <div id="player"></div>
+        <div id= "userBar">
+            <button id="toggle" style="width: 50px" onclick="toggleVideo()">play</button>
+            <svg id="scroll" height="13" width="530" onclick>
+                <rect y="7" width="530" height="2" style="stroke:rgb(255,0,0);stroke-width:2" onclick="handleClick(event)"/>
+                <circle cx="0" cy="8" r="6" stroke="red" stroke-width="3" fill="white"/>
+            </svg>
+        </div>
+        <script>
+
+          
+            // 2. This code loads the IFrame Player API code asynchronously.
+            var tag = document.createElement('script');
+            
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            
+            // 3. This function creates an <iframe> (and YouTube player)
+            //    after the API code downloads.
+            var player;
+            var target;
+            function onYouTubeIframeAPIReady() {
+              player = new YT.Player('player', {
+                height: '390',
+                width: '640',
+                videoId: 'FSBH0G-Ns-M',
+              });
+            }
+            function toggleVideo() {
+                const state = player.getPlayerState();
+                if (state === 1 || state === 3) {
+                    player.pauseVideo();
+                    document.querySelector('#toggle').innerHTML = "play";
+                } else {
+                  document.querySelector('#toggle').innerHTML = "pause";
+                    player.playVideo();
+                }
+            }
+            
+            function handleClick(e) {
+              console.log(e.clientX - 50 - 11);//x - button width - padding
+              console.log((e.clientX - 50 - 11) / 530 * player.getDuration());
+              player.seekTo((e.clientX - 50 - 11) / 530 * player.getDuration(), false);
+            }
+            
+            function placeholderFunc() {
+                const totalTime = player.getDuration;
+            
+            }
+        </script>
+    </body>
+</html>
